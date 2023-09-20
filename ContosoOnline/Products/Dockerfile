@@ -1,13 +1,14 @@
-FROM mcr.microsoft.com/dotnet/aspnet:8.0.0-rc.1 AS base
+FROM mcr.microsoft.com/dotnet/aspnet:8.0.0-rc.1-alpine AS base
 WORKDIR /app
 EXPOSE 80
 EXPOSE 8080
 EXPOSE 443
 
-FROM mcr.microsoft.com/dotnet/sdk:8.0.100-rc.1 AS build
+FROM mcr.microsoft.com/dotnet/sdk:8.0.100-rc.1-alpine3.18 AS build
 
-#RUN apk add \
-RUN apt-get \
+WORKDIR /src
+
+RUN /apk add \
 	# Add NativeAOT pre-reqs
 	clang build-base zlib-dev \
 	# workaround so GRPC protoc works - https://github.com/grpc/grpc/blob/master/src/csharp/BUILD-INTEGRATION.md#using-grpctools-with-unsupported-architectures
@@ -16,7 +17,6 @@ RUN apt-get \
 ENV PROTOBUF_PROTOC=/usr/bin/protoc
 ENV GRPC_PROTOC_PLUGIN=/usr/bin/grpc_csharp_plugin
 
-WORKDIR /src
 COPY ["NuGet.config", "."]
 COPY ["ContosoOnline/Products/Products.csproj", "Products/"]
 COPY ["ContosoOnline/Diagnostics/Diagnostics.csproj", "Diagnostics/"]
