@@ -1,13 +1,19 @@
-FROM mcr.microsoft.com/dotnet/aspnet:8.0.0-rc.1-alpine AS base
+FROM mcr.microsoft.com/dotnet/aspnet:8.0.0-rc.1 AS base
 WORKDIR /app
 
-FROM mcr.microsoft.com/dotnet/sdk:8.0.100-rc.1-alpine3.18 AS build
+FROM mcr.microsoft.com/dotnet/sdk:8.0.100-rc.1 AS build
 
 WORKDIR /src
 
-RUN /apk add \
-	# Add NativeAOT pre-reqs
-	clang build-base zlib-dev 
+# RUN /apk add \
+# 	# Add NativeAOT pre-reqs
+# 	clang build-base zlib-dev 
+
+RUN apt-get update \
+    && apt-get install -y \
+        clang \
+        build-essential \
+        zlib1g-dev
 
 COPY ["NuGet.config", "."]
 COPY ["ContosoOnline/Orders/Orders.csproj", "Orders/"]
