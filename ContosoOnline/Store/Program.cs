@@ -21,7 +21,7 @@ builder.Services.AddHttpClient<OrderServiceClient>(c =>
 
     c.BaseAddress = new(url);
 })
-.AddStandardResilienceHandler()
+//.AddStandardResilienceHandler()
 ;
 
 builder.Services.AddRazorPages();
