@@ -35,8 +35,8 @@ public static class DiagnosticServiceCollectionExtensions
     //                 .AddEventCountersInstrumentation(c =>
     //                 {
     //                     c.AddEventSources(
-                            "Microsoft.AspNetCore.Hosting",
-                            "Microsoft-AspNetCore-Server-Kestrel",
+    //                        "Microsoft.AspNetCore.Hosting",
+    //                        "Microsoft-AspNetCore-Server-Kestrel",
     //                         "System.Net.Http",
     //                         "System.Net.Sockets");
     //                 })

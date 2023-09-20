@@ -6,7 +6,8 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0.100-rc.1 AS build
 
-RUN apk add \
+#RUN apk add \
+RUN apt-get \
 	# Add NativeAOT pre-reqs
 	clang build-base zlib-dev \
 	# workaround so GRPC protoc works - https://github.com/grpc/grpc/blob/master/src/csharp/BUILD-INTEGRATION.md#using-grpctools-with-unsupported-architectures

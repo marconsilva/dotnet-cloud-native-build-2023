@@ -3,7 +3,8 @@ WORKDIR /app
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0.100-rc.1 AS build
 
-RUN apk add \
+#RUN apk add \
+RUN apt-get \
 	# Add NativeAOT pre-reqs
 	clang build-base zlib-dev
 
