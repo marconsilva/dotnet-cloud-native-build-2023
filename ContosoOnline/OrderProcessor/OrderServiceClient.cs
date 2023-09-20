@@ -4,11 +4,11 @@ namespace OrderProcessor;
 
 public class OrderServiceClient(HttpClient httpClient, ILogger<OrderServiceClient> logger)
 {
-    public async Task<IEnumerable<Order>> GetOrders()
+    public async Task<IEnumerable<Order>> GetOrdersAsync(CancellationToken cancellationToken = default)
     {
         logger.LogInformation("Getting orders from {Url}", httpClient.BaseAddress);
 
-        var orders = await httpClient.GetFromJsonAsync("/orders", OrderJsonContext.Default.ListOrder);
+        var orders = await httpClient.GetFromJsonAsync<IEnumerable<Order>>("/orders", cancellationToken);
 
         logger.LogInformation("Got {Count} orders from {Url}", orders?.Count() ?? 0, httpClient.BaseAddress);
 

@@ -1,4 +1,7 @@
-FROM mcr.microsoft.com/dotnet/nightly/sdk:8.0-preview-alpine AS build
+FROM mcr.microsoft.com/dotnet/aspnet:8.0.0-rc.1 AS base
+WORKDIR /app
+
+FROM mcr.microsoft.com/dotnet/sdk:8.0.100-rc.1 AS build
 
 RUN apk add \
 	# Add NativeAOT pre-reqs

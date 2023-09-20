@@ -3,14 +3,15 @@ using OrderProcessor;
 
 var builder = Host.CreateApplicationBuilder(args);
 
-builder.Services.AddSingleton<ProductServiceClient>();
+builder.Services.AddTransient<ProductServiceClient>();
 builder.Services.AddGrpcClient<Products.Products.ProductsClient>(c =>
 {
     var backendUrl = builder.Configuration["PRODUCTS_URL"] ?? throw new InvalidOperationException("PRODUCTS_URL is not set");
 
     c.Address = new(backendUrl);
 })
-.AddStandardResilienceHandler();
+//.AddStandardResilienceHandler() // think this has a bug for workers
+;
 
 builder.Services.AddHttpClient<OrderServiceClient>(c =>
 {
@@ -18,7 +19,8 @@ builder.Services.AddHttpClient<OrderServiceClient>(c =>
 
     c.BaseAddress = new(url);
 })
-.AddStandardResilienceHandler();
+//.AddStandardResilienceHandler() // think this has a bug for workers
+;
 
 builder.Services.AddObservability("OrderProcessor", builder.Configuration, tracing =>
 {
@@ -26,7 +28,8 @@ builder.Services.AddObservability("OrderProcessor", builder.Configuration, traci
 });
 
 builder.Services.AddSingleton<Instrumentation>();
-builder.Services.AddHostedService<Worker>();
+builder.Services.AddHostedService<OrderProcessingWorker>();
+builder.Services.AddScoped<OrderProcessingRequest>();
 
 var host = builder.Build();
 
