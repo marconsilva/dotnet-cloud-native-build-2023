@@ -120,6 +120,10 @@ else
         StateHasChanged();
         
         var result = await _orderClient.SubmitNewOrder(_cart.ToArray());
+        if(!result)
+        {
+            throw new Exception("Order failed to submit");
+        }
         _cart.Clear();
         await GetProducts();
 
