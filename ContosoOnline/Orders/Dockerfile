@@ -5,10 +5,6 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0.100-rc.1 AS build
 
 WORKDIR /src
 
-# RUN /apk add \
-# 	# Add NativeAOT pre-reqs
-# 	clang build-base zlib-dev 
-
 RUN apt-get update \
     && apt-get install -y \
         clang \
