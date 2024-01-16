@@ -23,6 +23,7 @@ public static class OrdersApi
 
         group.MapPost("/", async Task<Results<BadRequest, Created<Order>>> (Order order, IOrdersDb db, CancellationToken ct) =>
         {
+            //throw new NotImplementedException("This is not implemented yet");
             var createdOrder = await db.AddOrderAsync(order.OrderId, ct);
 
             if (createdOrder is null)

@@ -12,7 +12,7 @@ builder.Services.AddGrpcClient<Products.Products.ProductsClient>(c =>
 
     c.Address = new(backendUrl);
 })
-.AddStandardResilienceHandler()
+//.AddStandardResilienceHandler()
 ;
 
 builder.Services.AddHttpClient<OrderServiceClient>(c =>
@@ -21,7 +21,7 @@ builder.Services.AddHttpClient<OrderServiceClient>(c =>
 
     c.BaseAddress = new(url);
 })
-.AddStandardResilienceHandler()
+//.AddStandardResilienceHandler()
 ;
 
 builder.Services.AddRazorPages();
