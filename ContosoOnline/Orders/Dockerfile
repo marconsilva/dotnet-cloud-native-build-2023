@@ -2,6 +2,11 @@ FROM mcr.microsoft.com/dotnet/aspnet:8.0.1 AS base
 WORKDIR /app
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0.101 AS build
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+       clang zlib1g-dev
+
 WORKDIR /src
 COPY ["NuGet.config", "."]
 COPY ["ContosoOnline/Orders/Orders.csproj", "Orders/"]
@@ -18,4 +23,4 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 USER $APP_UID
-ENTRYPOINT ["dotnet", "Orders.dll"]
+ENTRYPOINT ["./Orders"]

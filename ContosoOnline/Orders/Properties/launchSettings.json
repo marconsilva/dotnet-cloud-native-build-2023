@@ -5,10 +5,11 @@
       "launchBrowser": false,
       "launchUrl": "orders",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "ConnectionStrings__OrdersDb": "Server=localhost;Port=5432;Database=orders;User Id=postuser;Password=example"
       },
       "dotnetRunMessages": true,
       "applicationUrl": "http://localhost:5004"
-    }
+        }
   }
 }

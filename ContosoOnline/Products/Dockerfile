@@ -6,6 +6,11 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0.101 AS build
 WORKDIR /src
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+       clang zlib1g-dev
+
 COPY ["NuGet.config", "."]
 COPY ["ContosoOnline/Products/Products.csproj", "Products/"]
 COPY ["ContosoOnline/Diagnostics/Diagnostics.csproj", "Diagnostics/"]
@@ -15,9 +20,9 @@ WORKDIR "/src/Products"
 RUN dotnet build "Products.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "Products.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "Products.csproj" -c Release -o /app/publish /p:UseAppHost=true
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "Products.dll"]
+ENTRYPOINT ["./Products"]

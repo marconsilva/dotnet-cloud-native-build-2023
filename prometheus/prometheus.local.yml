@@ -4,7 +4,7 @@ global:
 scrape_configs:
   - job_name: 'orders'
     static_configs:
-      - targets: ['host.docker.internal:5000']
+      - targets: ['host.docker.internal:5004']
   - job_name: 'products'
     static_configs:
       - targets: ['host.docker.internal:5222']
