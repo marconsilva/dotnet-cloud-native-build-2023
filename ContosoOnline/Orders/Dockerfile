@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/aspnet:8.0.1 AS base
+FROM mcr.microsoft.com/dotnet/runtime-deps:8.0.1-jammy-chiseled AS base
 WORKDIR /app
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0.101 AS build
@@ -18,6 +18,7 @@ RUN dotnet build "Orders.csproj" -c Release -o /app/build
 
 FROM build AS publish
 RUN dotnet publish "Orders.csproj" -c Release -o /app/publish /p:UseAppHost=true
+RUN rm -rf /app/publish/*.dbg
 
 FROM base AS final
 WORKDIR /app

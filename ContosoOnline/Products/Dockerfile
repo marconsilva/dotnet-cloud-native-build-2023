@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/aspnet:8.0.1 AS base
+FROM mcr.microsoft.com/dotnet/runtime-deps:8.0.1-jammy-chiseled AS base
 WORKDIR /app
 EXPOSE 80
 EXPOSE 8080
@@ -21,6 +21,7 @@ RUN dotnet build "Products.csproj" -c Release -o /app/build
 
 FROM build AS publish
 RUN dotnet publish "Products.csproj" -c Release -o /app/publish /p:UseAppHost=true
+RUN rm -rf /app/publish/*.dbg
 
 FROM base AS final
 WORKDIR /app
